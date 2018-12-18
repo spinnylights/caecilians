@@ -1,11 +1,11 @@
 require 'minitest/autorun'
-require_relative 'rule_150'
+require_relative 'totalistic_ca'
 
-class TestRule150 < Minitest::Test
+class TestTotalisticCA < Minitest::Test
   def setup
     @length = 10
     rows = 2
-    @rule = Rule150.new(length: @length, rows: rows)
+    @rule = TotalisticCA.new(length: @length, rows: rows)
   end
 
   def test_make_binary
@@ -36,7 +36,7 @@ class TestRule150 < Minitest::Test
     second_row = ["0", "0", "B", "0"]
     expected = [first_row, second_row]
     rows = 2
-    rule = Rule150.new(first_row: first_row, rows: rows)
+    rule = TotalisticCA.new(first_row: first_row, rows: rows)
     assert_equal expected, rule.make_matrix
   end
 end

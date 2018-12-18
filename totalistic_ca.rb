@@ -1,4 +1,4 @@
-class Rule150
+class TotalisticCA
   attr_reader :length, :rows, :first_row
   def initialize(args)
     if args[:length] && args[:first_row]
