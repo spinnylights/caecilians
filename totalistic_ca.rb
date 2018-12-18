@@ -1,6 +1,11 @@
 class TotalisticCA
-  attr_reader :length, :rows, :first_row
+  attr_reader :length, :rows, :first_row, :rule
+  attr_accessor :borders, :unconnected_value
   def initialize(args)
+    unless args[:rule]
+      raise ArgumentError, "rule must be supplied at initialization"
+    end
+    @rule = args[:rule]
     if args[:length] && args[:first_row]
       warn "ignoring length since first_row was supplied"
     end
@@ -12,71 +17,50 @@ class TotalisticCA
       @first_row = random_first_row
     end
     @rows = args[:rows] || 10
+    @borders = args[:borders] || :unconnected
+    @unconnected_value = args[:unconnected_value] || 0
   end
 
-  EMPTY = "0"
-  A     = "A"
-  B     = "B"
-  C     = "C"
-  D     = "D"
-
   def random_tile
-    if rand(2) == 1
-      [A, B, C, D].sample
-    else
-      EMPTY
-    end
+    rule.uniq.sample
   end
 
   def random_first_row
     Array.new(length).map {random_tile}
   end
 
-  def make_binary(arr)
-    arr.map do |n|
-      if n == EMPTY
-        0
+  def next_row(previous_row)
+    next_row = Array.new(previous_row.length)
+    n = 0
+    next_row.map do |cell|
+      total = nil
+
+      if n == 0
+        if borders == :toroidal
+          total = previous_row.last + previous_row[n] + previous_row[n+1]
+        else
+          total = unconnected_value + previous_row[n] + previous_row[n+1]
+        end
+      elsif n == previous_row.length - 1
+        if borders == :toroidal
+          total = previous_row[n-1] + previous_row[n] + previous_row.first
+        else
+          total = previous_row[n-1] + previous_row[n] + unconnected_value
+        end
       else
-        1
+        total = previous_row[n-1] + previous_row[n] + previous_row[n+1]
       end
+
+      unless total
+        raise TypeError, "total remained nil through a next_row map cycle"
+      end
+
+      n+=1
+      rule[total]
     end
   end
 
-  def determine_child(set)
-    case set
-    when [1, 1, 1]
-      EMPTY
-    when [1, 1, 0]
-      A
-    when [1, 0, 1]
-      B
-    when [1, 0, 0]
-      EMPTY
-    when [0, 1, 1]
-      C
-    when [0, 1, 0]
-      D
-    when [0, 0, 1]
-      A
-    when [0, 0, 0]
-      EMPTY
-    end
-  end
-
-  def next_row(unprepared_row)
-    next_row = []
-    string_row = unprepared_row.unshift(EMPTY) << (EMPTY)
-    row = make_binary(string_row)
-    (0..(row.length - 3)).each do |index|
-      set = row[index..(index + 2)]
-      next_row << determine_child(set)
-    end
-    unprepared_row.shift
-    unprepared_row.pop
-    next_row
-  end
-
-  def make_matrix
+  def run
     matrix = [first_row]
     (0...rows - 1).each do |row|
       new_row = next_row(matrix[row])
