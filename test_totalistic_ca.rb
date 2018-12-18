@@ -92,4 +92,27 @@ class TestTotalisticCA < Minitest::Test
     ca.unconnected_value = 0
     assert_equal expected, ca.run
   end
+
+  def test_scale
+    row  = [0, 1, 1, 1]
+    expected = [0, 0, 1, 1, 1, 1, 1, 1]
+    assert_equal expected, @ca.scale(row, 2)
+  end
+
+  def test_run_scaled_up
+    rule = [1, 0, 0, 1] # 2-color rule
+    first_row  = [0, 1, 1, 1]
+    second_row = [0, 0, 1, 0]
+    expected = [
+      [0, 0, 1, 1, 1, 1, 1, 1],
+      [0, 0, 1, 1, 1, 1, 1, 1],
+      [0, 0, 0, 0, 1, 1, 0, 0],
+      [0, 0, 0, 0, 1, 1, 0, 0]
+    ]
+    rows = 2
+    ca = TotalisticCA.new(first_row: first_row, rows: rows, rule: rule)
+    ca.borders = :unconnected
+    ca.unconnected_value = 0
+    assert_equal expected, ca.run(scale: 2)
+  end
 end

@@ -60,12 +60,33 @@ class TotalisticCA
     end
   end
 
-  def run
+  def scale(row, scale)
+    scaled_row = []
+    row.each do |c|
+      scale.times do
+        scaled_row << c
+      end
+    end
+    scaled_row
+  end
+
+  def run(options = {})
     matrix = [first_row]
     (0...rows - 1).each do |row|
       new_row = next_row(matrix[row])
       matrix << new_row
     end
-    matrix
+    if options[:scale]
+      scaled_matrix = []
+      matrix.each do |row|
+        options[:scale].times do
+          scaled_row = scale(row, options[:scale])
+          scaled_matrix << scaled_row
+        end
+      end
+      return scaled_matrix
+    else
+      return matrix
+    end
   end
 end
