@@ -3,10 +3,10 @@ class RuleDrawer
 
   attr_reader :matrix
   attr_accessor :colors, :factor
-  def initialize(matrix, colors, factor = 1)
+  def initialize(matrix, colors, options)
     @matrix = matrix
     @colors = colors
-    @factor = factor
+    @factor = options[:factor] || 1
   end
 
   def convert_to_pixel(cell, colorer = ChunkyPNG::Color)

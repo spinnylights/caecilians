@@ -22,11 +22,12 @@ class RuleDrawerTest < Minitest::Test
         blue: 0.99
       },
     ]
-    @drawer = RuleDrawer.new(matrix, @colors)
+    @drawer = RuleDrawer.new(matrix, @colors, factor: 255)
   end
 
-  def test_convert_to_pixel
+  def test_convert_to_pixel_with_factor_1
     cell = 0
+    @drawer.factor = 1
     colorer = Minitest::Mock.new
     colorer.expect :rgb, true, [
       (@colors[0][:red]).round,
@@ -37,9 +38,8 @@ class RuleDrawerTest < Minitest::Test
     colorer.verify
   end
 
-  def test_convert_to_pixel_with_factor
+  def test_convert_to_pixel_with_factor_255
     cell = 0
-    @drawer.factor = 255
     colorer = Minitest::Mock.new
     colorer.expect :rgb, true, [
       (@colors[0][:red]*255).round,

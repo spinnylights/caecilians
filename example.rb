@@ -44,5 +44,5 @@ colors = [
   },
 ]
 
-drawer = RuleDrawer.new(ca.run(scale: 3), colors)
+drawer = RuleDrawer.new(ca.run(scale: 3), colors, factor: 1)
 drawer.build_image.save("example.png")
