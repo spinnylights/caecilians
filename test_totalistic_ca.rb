@@ -30,6 +30,18 @@ class TestTotalisticCA < Minitest::Test
     end
   end
 
+  def test_inexhaustive_rule_raises_argument_error
+    assert_raises ArgumentError do
+      TotalisticCA.new(rule: [5, 0, 1])
+    end
+  end
+
+  def test_inexhaustive_rule_with_negative_numbers_raises_argument_error
+    assert_raises ArgumentError do
+      TotalisticCA.new(rule: [-3, 0, 1, 2, 0, 1, 1])
+    end
+  end
+
   def test_not_supplying_first_row_creates_first_row
     refute_nil @ca.first_row
   end
@@ -131,12 +143,6 @@ class TestTotalisticCA < Minitest::Test
     ca.borders = :unconnected
     ca.unconnected_value = 0
     assert_equal expected, ca.run(scale: 2)
-  end
-
-  def test_inexhaustive_rule_raises
-    assert_raises ArgumentError do
-      TotalisticCA.new(rule: [5, 0, 1])
-    end
   end
 
   def test_check_valid_rule

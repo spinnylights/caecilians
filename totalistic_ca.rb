@@ -29,7 +29,7 @@ class TotalisticCA
   end
 
   def self.check_rule(rule)
-    rule.length >= rule.max*3 # neighborhood always has 3 cells
+    rule.length >= rule.map {|n| n.abs}.max*3 # neighborhood always has 3 cells
   end
 
   def random_tile
