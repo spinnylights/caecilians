@@ -1,2 +1,6 @@
 *.png
 draw_*
+
+# binstubs
+.bundle/
+bin/
