@@ -17,7 +17,10 @@ class TotalisticCA
     end
 
     if args[:first_row]
-      @first_row = args[:first_row]
+      unless TotalisticCA.check_first_row(args[:first_row], @rule)
+        raise ArgumentError, "first_row contains invalid values relative to rule"
+      end
+      @first_row  = args[:first_row]
       @columns    = first_row.length
     else
       @columns    = args[:columns] || 10
@@ -30,6 +33,11 @@ class TotalisticCA
 
   def self.check_rule(rule)
     rule.length >= rule.map {|n| n.abs}.max*3 # neighborhood always has 3 cells
+  end
+
+  def self.check_first_row(first_row, rule)
+    max_val = first_row.map {|n| n.abs}.max
+    max_val*3 + 1 <= rule.length
   end
 
   def random_tile

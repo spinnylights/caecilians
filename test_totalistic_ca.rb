@@ -42,6 +42,12 @@ class TestTotalisticCA < Minitest::Test
     end
   end
 
+  def test_invalid_values_for_rule_in_first_row_raises_argument_error
+    assert_raises ArgumentError do
+      TotalisticCA.new(rule: @rule, first_row: [0, 1, -3])
+    end
+  end
+
   def test_not_supplying_first_row_creates_first_row
     refute_nil @ca.first_row
   end
@@ -151,5 +157,15 @@ class TestTotalisticCA < Minitest::Test
 
   def test_check_invalid_rule
     refute TotalisticCA.check_rule(generate_rule(:invalid))
+  end
+
+  def test_check_valid_first_row
+    first_row = [-2, 0, 1]
+    assert TotalisticCA.check_first_row(first_row, @rule)
+  end
+
+  def test_check_invalid_first_row
+    first_row = [-3, 0, 1]
+    refute TotalisticCA.check_first_row(first_row, @rule)
   end
 end
