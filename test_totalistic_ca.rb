@@ -3,10 +3,10 @@ require_relative 'totalistic_ca'
 
 class TestTotalisticCA < Minitest::Test
   def setup
-    @length = 10
+    @columns = 10
     rows = 2
     @rule = [2, 0, 1, 2, 0, 1, 1] # a 3-color ca
-    @ca = TotalisticCA.new(length: @length, rows: rows, rule: @rule)
+    @ca = TotalisticCA.new(columns: @columns, rows: rows, rule: @rule)
   end
 
   def generate_rule(validity = :valid)
@@ -26,7 +26,7 @@ class TestTotalisticCA < Minitest::Test
 
   def test_creating_ca_raises_argument_error_if_no_rule_is_supplied
     assert_raises(ArgumentError) do
-      TotalisticCA.new(length: 1, rows: 1, first_row: [1])
+      TotalisticCA.new(columns: 1, rows: 1, first_row: [1])
     end
   end
 
@@ -36,13 +36,13 @@ class TestTotalisticCA < Minitest::Test
 
   def test_default_length_is_10_if_no_first_row_supplied
     ca = TotalisticCA.new(rule: generate_rule)
-    assert_equal 10, ca.length
+    assert_equal 10, ca.columns
   end
 
-  def test_length_is_equal_to_first_row_length_even_if_contradicting_length_supplied
+  def test_columns_is_equal_to_first_row_columns_even_if_contradicting_columns_supplied
     first_row = [0]
-    ca = TotalisticCA.new(rule: generate_rule, first_row: first_row, length: 5)
-    assert_equal first_row.length, ca.length
+    ca = TotalisticCA.new(rule: generate_rule, first_row: first_row, columns: 5)
+    assert_equal first_row.length, ca.columns
   end
 
   def test_default_rows_is_10
@@ -50,8 +50,8 @@ class TestTotalisticCA < Minitest::Test
     assert_equal 10, ca.rows
   end
 
-  def test_random_first_row_length
-    assert_equal @length, @ca.first_row.length
+  def test_random_first_row_columns
+    assert_equal @columns, @ca.first_row.length
   end
 
   def test_random_first_row_made_from_rule

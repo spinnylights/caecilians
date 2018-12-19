@@ -1,5 +1,5 @@
 class TotalisticCA
-  attr_reader :length, :rows, :first_row, :rule
+  attr_reader :columns, :rows, :first_row, :rule
   attr_accessor :borders, :unconnected_value
   def initialize(args)
     unless args[:rule]
@@ -12,15 +12,15 @@ class TotalisticCA
       raise ArgumentError, "supplied rule does not cover all cases"
     end
 
-    if args[:length] && args[:first_row]
-      warn "ignoring length since first_row was supplied"
+    if args[:columns] && args[:first_row]
+      warn "ignoring columns since first_row was supplied"
     end
 
     if args[:first_row]
       @first_row = args[:first_row]
-      @length    = first_row.length
+      @columns    = first_row.length
     else
-      @length    = args[:length] || 10
+      @columns    = args[:columns] || 10
       @first_row = random_first_row
     end
     @rows = args[:rows] || 10
@@ -37,7 +37,7 @@ class TotalisticCA
   end
 
   def random_first_row
-    Array.new(length).map {random_tile}
+    Array.new(columns).map {random_tile}
   end
 
   def next_row(previous_row)
