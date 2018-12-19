@@ -88,7 +88,7 @@ about it. You can get some cool-looking effects with them though.
 
 This is the number of rows (i.e. iterations) in the result.
 
-#### `first\_row`
+#### `first_row`
 
 You can use this to manually specify the values of the cells in
 the first row, which will be used as the initial conditions for
@@ -117,7 +117,7 @@ If you want to use this option, you will need to delete the `#`
 at the beginning of the line. "#" in Ruby marks a comment, so
 everything after it on the line is ignored.
 
-#### `unconnected\_value`
+#### `unconnected_value`
 
 If `borders` is `:unconnected`, this is the value used for
 "cells" outside the rows. It must be a value that can be used in
