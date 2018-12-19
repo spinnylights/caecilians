@@ -5,10 +5,17 @@ class TotalisticCA
     unless args[:rule]
       raise ArgumentError, "rule must be supplied at initialization"
     end
-    @rule = args[:rule]
+
+    if TotalisticCA.check_rule(args[:rule])
+      @rule = args[:rule]
+    else
+      raise ArgumentError, "supplied rule does not cover all cases"
+    end
+
     if args[:length] && args[:first_row]
       warn "ignoring length since first_row was supplied"
     end
+
     if args[:first_row]
       @first_row = args[:first_row]
       @length    = first_row.length
@@ -19,6 +26,10 @@ class TotalisticCA
     @rows = args[:rows] || 10
     @borders = args[:borders] || :unconnected
     @unconnected_value = args[:unconnected_value] || 0
+  end
+
+  def self.check_rule(rule)
+    rule.length >= rule.max*3 # neighborhood always has 3 cells
   end
 
   def random_tile

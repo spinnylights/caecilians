@@ -9,6 +9,21 @@ class TestTotalisticCA < Minitest::Test
     @ca = TotalisticCA.new(length: @length, rows: rows, rule: @rule)
   end
 
+  def generate_rule(validity = :valid)
+    max_value = rand(10) + 1 # ceiling could be any integer so the choice is arbitrary
+    if validity == :invalid
+      rule_length = rand((max_value*3) - 1) # neighborhood always has 3 cells
+    else
+      rule_length = max_value*3
+    end
+    rule = []
+    rule_length.times do
+      rule << rand(max_value + 1)
+    end
+    rule[rand(rule.length)] = max_value
+    rule
+  end
+
   def test_creating_ca_raises_argument_error_if_no_rule_is_supplied
     assert_raises(ArgumentError) do
       TotalisticCA.new(length: 1, rows: 1, first_row: [1])
@@ -20,18 +35,18 @@ class TestTotalisticCA < Minitest::Test
   end
 
   def test_default_length_is_10_if_no_first_row_supplied
-    ca = TotalisticCA.new(rule: [0,1])
+    ca = TotalisticCA.new(rule: generate_rule)
     assert_equal 10, ca.length
   end
 
   def test_length_is_equal_to_first_row_length_even_if_contradicting_length_supplied
     first_row = [0]
-    ca = TotalisticCA.new(rule: [0,1], first_row: first_row, length: 5)
+    ca = TotalisticCA.new(rule: generate_rule, first_row: first_row, length: 5)
     assert_equal first_row.length, ca.length
   end
 
   def test_default_rows_is_10
-    ca = TotalisticCA.new(rule: [0,1])
+    ca = TotalisticCA.new(rule: generate_rule)
     assert_equal 10, ca.rows
   end
 
@@ -114,5 +129,19 @@ class TestTotalisticCA < Minitest::Test
     ca.borders = :unconnected
     ca.unconnected_value = 0
     assert_equal expected, ca.run(scale: 2)
+  end
+
+  def test_inexhaustive_rule_raises
+    assert_raises ArgumentError do
+      TotalisticCA.new(rule: [5, 0, 1])
+    end
+  end
+
+  def test_check_valid_rule
+    assert TotalisticCA.check_rule(generate_rule)
+  end
+
+  def test_check_invalid_rule
+    refute TotalisticCA.check_rule(generate_rule(:invalid))
   end
 end
