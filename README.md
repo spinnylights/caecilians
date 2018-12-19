@@ -84,11 +84,11 @@ implementation-dependent and I'm not going to make any promises
 about it. You can get some cool-looking effects with them though.
 :D
 
-### `rows`
+#### `rows`
 
 This is the number of rows (i.e. iterations) in the result.
 
-### `first\_row`
+#### `first\_row`
 
 You can use this to manually specify the values of the cells in
 the first row, which will be used as the initial conditions for
@@ -98,7 +98,7 @@ used here.
 If `first_row` is not supplied, the first row is generated at
 random based on the rule.
 
-### `borders`
+#### `borders`
 
 This specifies how the borders of the rows are accounted for. You
 may have wondered about this if you read about how the rule works
@@ -117,7 +117,7 @@ If you want to use this option, you will need to delete the `#`
 at the beginning of the line. "#" in Ruby marks a comment, so
 everything after it on the line is ignored.
 
-### `unconnected\_value`
+#### `unconnected\_value`
 
 If `borders` is `:unconnected`, this is the value used for
 "cells" outside the rows. It must be a value that can be used in
@@ -126,7 +126,7 @@ value is 0.
 
 You will also need to uncomment this if you want to use it.
 
-### `columns`
+#### `columns`
 
 This specifies the number of columns in the randomly-generated
 first row if `first_row` is not supplied. If `first_row` is
@@ -136,7 +136,7 @@ To use it, you will both need to uncomment the line it's on and
 comment out or delete all of the `first_row` argument (so, lines
 7–23).
 
-### `colors`
+#### `colors`
 
 These are the colors used to render the output of the automaton.
 They're specified in RGB format from 0–255. The number of colors needed is
@@ -149,14 +149,14 @@ you'd like to do this, look at the arguments to `RuleDrawer.new`
 where you'll see `factor: 1`. Change `1` to whatever you'd like
 the factor to be.
 
-### `scale`
+#### `scale`
 
 The other relevant part of the arguments to `RuleDrawer.new` is
 the part that says `scale: 3`. That means that each cell is
 rendered as a 3x3 square of pixels. You can increase or decrease
 the scale if you'd like the squares to be bigger or smaller.
 
-### filename
+#### filename
 
 On the last line, you can change `example.png` to something else
 if you'd like the generated image file to have a different name.
