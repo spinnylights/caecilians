@@ -30,8 +30,5 @@ DEPENDENCIES
   pry-stack_explorer (= 0.4.9.3)!
   rake (~> 12.3.2)!
 
-RUBY VERSION
-   ruby 2.5.3p105
-
 BUNDLED WITH
    1.17.2

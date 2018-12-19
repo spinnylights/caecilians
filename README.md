@@ -16,8 +16,8 @@ If you don't already have them, you'll need to install
 [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 and
 [Ruby](https://www.ruby-lang.org/en/documentation/installation/).
-Even if you already have it installed, make sure to get the
-latest version (2.5.3) if yours is older.  You'll also need to
+Even if you already have Ruby installed, make sure to get the
+latest version if yours is older.  You'll also need to
 know how to access the command line on your operating system and
 be proficient in its basic usage, like entering commands and
 navigating the filesystem. In Windows, Powershell is probably the
