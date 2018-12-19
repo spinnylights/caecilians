@@ -1,7 +1,10 @@
 # Caecilians
 
-A [Ruby](https://www.ruby-lang.org/) program for generating and drawing [totalistic cellular
+A [Ruby](https://www.ruby-lang.org/) program for generating and
+drawing [totalistic cellular
 automata](https://en.wikipedia.org/wiki/Cellular_automaton#Totalistic).
+Right now it only does 1D automata but in the future it may do 2D
+automata as well.
 
 ## Usage
 
