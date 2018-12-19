@@ -50,6 +50,8 @@ class RuleDrawerTest < Minitest::Test
     colorer.verify
   end
 
+  # the overconcreteness of this test gestures towards
+  # refactoring build_image
   def test_build_image
     image = Minitest::Mock.new
     image.expect :set_pixel, true, [0, 0, Integer]
