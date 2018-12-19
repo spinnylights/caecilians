@@ -24,7 +24,7 @@ class TotalisticCA
       @first_row = random_first_row
     end
     @rows = args[:rows] || 10
-    @borders = args[:borders] || :unconnected
+    @borders = args[:borders] || :toroidal
     @unconnected_value = args[:unconnected_value] || 0
   end
 

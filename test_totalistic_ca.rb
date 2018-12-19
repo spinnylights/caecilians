@@ -61,9 +61,9 @@ class TestTotalisticCA < Minitest::Test
     end
   end
 
-  def test_unconnected_borders_is_default
+  def test_toroidal_borders_is_default
     ca = TotalisticCA.new(rule: @rule)
-    assert_equal :unconnected, ca.borders
+    assert_equal :toroidal, ca.borders
   end
 
   def test_unconnected_value_default_is_zero
