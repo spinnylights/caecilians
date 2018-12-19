@@ -54,6 +54,13 @@ class TestTotalisticCA < Minitest::Test
     assert_equal @length, @ca.first_row.length
   end
 
+  def test_random_first_row_made_from_rule
+    # no first row supplied for @ca
+    @ca.first_row.uniq.each do |val|
+      assert_includes @rule, val
+    end
+  end
+
   def test_unconnected_borders_is_default
     ca = TotalisticCA.new(rule: @rule)
     assert_equal :unconnected, ca.borders
@@ -66,11 +73,6 @@ class TestTotalisticCA < Minitest::Test
 
   def test_random_tile
     assert_includes (0..2), @ca.random_tile # 3 colors
-  end
-
-  def test_random_first_row_made_from_rule
-    # no first row supplied for @ca
-    assert_equal @rule.uniq.sort, @ca.first_row.uniq.sort
   end
 
   def test_next_row_toroidal
