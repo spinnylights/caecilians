@@ -2,35 +2,19 @@ class RuleDrawer
   require 'chunky_png'
 
   attr_reader :matrix
-  def initialize(matrix)
+  attr_accessor :colors, :factor
+  def initialize(matrix, colors, factor = 1)
     @matrix = matrix
+    @colors = colors
+    @factor = factor
   end
 
-  def convert_to_pixel(cell)
-    red, blue, green = 0, 0, 0
-    case cell
-    when "0"
-      red = 255
-      green = 255
-      blue = 255
-    when "A"
-      red = 242
-      green = rand(64..126)
-      blue = 29
-    when "B"
-      red = 21
-      green = 191
-      blue = rand(23..104)
-    when "C"
-      red = rand(80..183)
-      green = 21
-      blue = 191
-    when "D"
-      red = 252
-      green = rand(168..192)
-      blue = rand(219..241)
-    end
-    ChunkyPNG::Color.rgb(red, green, blue)
+  def convert_to_pixel(cell, colorer = ChunkyPNG::Color)
+    colorer.rgb(
+      (colors[cell][:red]*factor).round,
+      (colors[cell][:green]*factor).round,
+      (colors[cell][:blue]*factor).round
+    )
   end
 
   def build_image
