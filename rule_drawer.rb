@@ -1,12 +1,19 @@
 class RuleDrawer
   require 'chunky_png'
 
-  attr_reader :matrix
-  attr_accessor :colors, :factor
-  def initialize(matrix, colors, options)
+  attr_reader :matrix, :colors
+  attr_accessor :factor
+  def initialize(matrix, colors, options={})
     @matrix = matrix
+    unless RuleDrawer.check_colors(colors, @matrix)
+      raise ArgumentError, "too few colors specified"
+    end
     @colors = colors
     @factor = options[:factor] || 1
+  end
+
+  def self.check_colors(colors, matrix)
+    colors.length >= matrix.flatten.max + 1
   end
 
   def convert_to_pixel(cell, colorer = ChunkyPNG::Color)

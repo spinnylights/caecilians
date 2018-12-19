@@ -4,7 +4,7 @@ require_relative 'rule_drawer'
 
 class RuleDrawerTest < Minitest::Test
   def setup
-    matrix = [[0, 1, 2],[1, 2, 0]]
+    @matrix = [[0, 1, 2],[1, 2, 0]]
     @colors = [
       {
         red: 0.88,
@@ -22,7 +22,25 @@ class RuleDrawerTest < Minitest::Test
         blue: 0.99
       },
     ]
-    @drawer = RuleDrawer.new(matrix, @colors, factor: 255)
+    @drawer = RuleDrawer.new(@matrix, @colors, factor: 255)
+  end
+
+  def test_creating_a_rule_drawer_with_too_few_colors_raises_argument_error
+    assert_raises ArgumentError do
+      RuleDrawer.new(@matrix, colors=[{red: 1, green: 1, blue: 1}])
+    end
+  end
+
+  def test_not_specifying_options_hash_during_init_is_okay
+    assert RuleDrawer.new(@matrix, @colors)
+  end
+
+  def test_check_valid_number_of_colors
+    assert RuleDrawer.check_colors(@colors, @matrix)
+  end
+
+  def test_check_invalid_number_of_colors
+    refute RuleDrawer.check_colors(colors=[{red: 1, green: 1, blue: 1}], @matrix)
   end
 
   def test_convert_to_pixel_with_factor_1
