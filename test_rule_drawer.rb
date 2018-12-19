@@ -1,4 +1,5 @@
 require 'minitest/autorun'
+require 'chunky_png'
 require_relative 'rule_drawer'
 
 class RuleDrawerTest < Minitest::Test
@@ -50,6 +51,14 @@ class RuleDrawerTest < Minitest::Test
   end
 
   def test_build_image
-    assert @drawer.build_image.display
+    image = Minitest::Mock.new
+    image.expect :set_pixel, true, [0, 0, Integer]
+    image.expect :set_pixel, true, [1, 0, Integer]
+    image.expect :set_pixel, true, [2, 0, Integer]
+    image.expect :set_pixel, true, [0, 1, Integer]
+    image.expect :set_pixel, true, [1, 1, Integer]
+    image.expect :set_pixel, true, [2, 1, Integer]
+    assert @drawer.build_image(image)
+    image.verify
   end
 end

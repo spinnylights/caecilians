@@ -17,15 +17,11 @@ class RuleDrawer
     )
   end
 
-  def build_image
+  def build_image(image = nil)
     cols = matrix[0].length
     rows = matrix.length
     pixel_mat = matrix.map {|row| row.map {|cell| convert_to_pixel(cell)}}
-#    flat_mat = matrix.flatten
-#    flat_mat.map! do |cell|
-#      convert_to_pixel(cell)
-#    end
-    image = ChunkyPNG::Image.new(cols, rows)
+    image ||= ChunkyPNG::Image.new(cols, rows)
     pixel_mat.each_with_index do |row, y|
       row.each_with_index do |cell, x|
         image.set_pixel(x, y, cell)
